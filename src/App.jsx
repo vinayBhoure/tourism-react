@@ -9,6 +9,7 @@ import VehicleFleet from "./scenes/vehicleFleet";
 import Terms from "./scenes/terms";
 import Privacy from "./scenes/privacy";
 import HotelBooking from "./scenes/hotels";
+import BookHotel from "./scenes/hotels/BookHotel";
 import { LoginPage } from "./scenes/login/page";
 import Header from "./components/Header";
 import Footer from "./components/Footer";
@@ -28,6 +29,7 @@ function App() {
 						<Route path="/" element={<HomePage />} />
 						<Route path="/about" element={<AboutUs />} />
 						<Route path="/hotels" element={<HotelBooking />} />
+						<Route path="/hotel/:id" element={<BookHotel />} />
 						<Route path="/attractions" element={<Attractions />} />
 						<Route path="/contact" element={<Contact />} />
 						{/* <Route path="/mice" element={<Mice />} /> */}

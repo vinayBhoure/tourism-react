@@ -16,7 +16,7 @@ const OurServices = () => {
               <div className="test_image">
                 <img src="images/our-services/hotel-booking.png" alt="dubai-city" className="our-img" />
               </div>
-              <a href="/hotels" target="_blank">
+              <a href="/hotels">
                 <div className="test_content_service">
                   <div className="test_content">
                     <div className="test_item_info_service">
