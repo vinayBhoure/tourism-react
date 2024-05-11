@@ -7,48 +7,41 @@ import "./Header.css";
 import { useCurrentUserQuery } from "../api/query/auth";
 import { faRightFromBracket } from "@fortawesome/free-solid-svg-icons";
 import { useLogoutMutation } from "../api/mutation/auth";
+import { useUserContext } from "../context/userContext";
 
 
 const UserAccount = () => {
-	const { data, isLoading, error } = useCurrentUserQuery()
-	const logoutMutation = useLogoutMutation()
 
-	if (isLoading) return (
-		<div className="spinner-border" role="status">
-			<span className="visually-hidden">Loading...</span>
-		</div>
-	)
-	if (error) {
-		return (
-			<>
-				<li>
-					<Link to='/login'><button className="header-button--login">LOGIN</button></Link>
-				</li>
-				<li>
-					<Link to='/signup'><button className="header-button--signup">SIGN UP</button></Link>
-				</li>
-			</>
-		)
-	}
-	if (data) {
-		return (
-			<li style={{
+	const {authUser, logoutUser} = useUserContext();
+	// const logoutMutation = useLogoutMutation()
+
+	return ( <div>
+		{
+			authUser ? (<li style={{
 				display: 'flex',
 				gap: '6px',
 				alignItems: 'center'
 			}}>
-				<span className="fw-bold" style={{ fontSize: '13px', textTransform: 'uppercase' }}>{data.data.name}</span>
+				<span className="fw-bold" style={{ fontSize: '13px', textTransform: 'uppercase' }}>{authUser.name}</span>
 				<button
-					onClick={() => logoutMutation.mutate()}
+					onClick={logoutUser}
 					style={{
 						background: 'transparent'
 					}}
 				>
 					<FontAwesomeIcon icon={faRightFromBracket} />
 				</button>
-			</li>
-		)
-	}
+			</li>) :
+			(<div className="d-flex">
+				<li>
+					<Link to='/login'><button className="header-button--login">LOGIN</button></Link>
+				</li>
+				<li>
+					<Link to='/signup'><button className="header-button--signup">SIGN UP</button></Link>
+				</li>
+			</div>)
+		}
+	</div>)
 }
 
 const Header = () => {
