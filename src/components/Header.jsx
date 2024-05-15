@@ -70,9 +70,9 @@ const Header = () => {
 							<li>
 								<Link to="/attractions">ATTRACTIONS</Link>
 							</li>
-							{/* <li>
+							<li>
 								<Link to="/mice">MICE</Link>
-							</li> */}
+							</li>
 							<li>
 								<Link to="/vehiclefleet">VEHICLE FLEET</Link>
 							</li>
