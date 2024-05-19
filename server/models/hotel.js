@@ -5,14 +5,6 @@ const hotelSchema = new mongoose.Schema({
         type: Number,
 
     },
-    chain_id: {
-        type: Number,
-
-    },
-    chain_name: {
-        type: String,
-
-    },
     brand_id: {
         type: Number,
 
@@ -57,31 +49,11 @@ const hotelSchema = new mongoose.Schema({
         type: String,
 
     },
-    countryisocode: {
-        type: String,
-
-    },
     star_rating: {
         type: Number,
 
     },
-    longitude: {
-        type: Number,
-
-    },
-    latitude: {
-        type: Number,
-
-    },
     url: {
-        type: String,
-
-    },
-    checkin: {
-        type: String,
-
-    },
-    checkout: {
         type: String,
 
     },
@@ -91,15 +63,6 @@ const hotelSchema = new mongoose.Schema({
     },
     numberfloors: {
         type: Number,
-
-    },
-    yearopened: {
-        type: Number,
-
-    },
-    yearrenovated: {
-        type: Number,
-
     },
     photo1: {
         type: String,
@@ -120,18 +83,6 @@ const hotelSchema = new mongoose.Schema({
         type: String,
 
     },
-    rates_from: {
-        type: Number,
-
-    },
-    continent_id: {
-        type: Number,
-
-    },
-    continent_name: {
-        type: String,
-
-    },
     city_id: {
         type: Number,
 
@@ -146,13 +97,7 @@ const hotelSchema = new mongoose.Schema({
     },
     rating_average: {
         type: Number,
-
-    },
-    rates_currency: {
-        type: String,
-
     }
-
 })
 
 const hotelModel = mongoose.model('hotels', hotelSchema)
