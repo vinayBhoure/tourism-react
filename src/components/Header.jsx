@@ -12,17 +12,17 @@ import { useUserContext } from "../context/userContext";
 
 const UserAccount = () => {
 
-	const {authUser, logoutUser} = useUserContext();
+	const { authUser, logoutUser } = useUserContext();
 	// const logoutMutation = useLogoutMutation()
 
-	return ( <div>
+	return (<div>
 		{
 			authUser ? (<li style={{
 				display: 'flex',
 				gap: '6px',
 				alignItems: 'center'
 			}}>
-				<span className="fw-bold" style={{ fontSize: '13px', textTransform: 'uppercase' }}>{authUser.name}</span>
+				<span className="fw-bold" style={{ fontSize: '13px', textTransform: 'uppercase' }}>{authUser.data.name}</span>
 				<button
 					onClick={logoutUser}
 					style={{
@@ -32,20 +32,21 @@ const UserAccount = () => {
 					<FontAwesomeIcon icon={faRightFromBracket} />
 				</button>
 			</li>) :
-			(<div className="d-flex">
-				<li>
-					<Link to='/login'><button className="header-button--login">LOGIN</button></Link>
-				</li>
-				<li>
-					<Link to='/signup'><button className="header-button--signup">SIGN UP</button></Link>
-				</li>
-			</div>)
+				(<div className="d-flex">
+					<li>
+						<Link to='/login'><button className="header-button--login">LOGIN</button></Link>
+					</li>
+					<li>
+						<Link to='/signup'><button className="header-button--signup">SIGN UP</button></Link>
+					</li>
+				</div>)
 		}
 	</div>)
 }
 
 const Header = () => {
 	const [showMenu, setShowMenu] = useState(false);
+	const { authUser } = useUserContext();
 
 
 	const toggleMenu = () => {
@@ -82,6 +83,11 @@ const Header = () => {
 							<li>
 								<Link to="/contact">CONTACT</Link>
 							</li>
+							{authUser?.data.role === 'admin' && (
+								<li>
+									<Link to="/admin/dashboard">Dashboard</Link>
+								</li>
+							)}
 							<UserAccount />
 						</ul>
 					</nav>

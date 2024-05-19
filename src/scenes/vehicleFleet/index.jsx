@@ -18,7 +18,7 @@ const VehicleFleet = () => {
 							<div className="vechile-fleet-banner-text">
 								<h1 className="fw-bold">Luxury Bus Rental Services in Dubai</h1>
 								<p>We offers luxury coach and mini-bus rentals for events, tours, and corporate transportation.</p>
-								<a href="https://api.whatsapp.com/send?phone=9424389077&amp;text=I%20am%20looking%20for?" target="_blank"> <button className="btn vechile-book-now">Book Now</button></a>
+								<a href="/vehicles"> <button className="btn vechile-book-now">Book Now</button></a>
 
 							</div>
 

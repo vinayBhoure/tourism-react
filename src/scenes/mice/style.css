@@ -12,6 +12,7 @@
     display: inline-block;
     /* height: 160px; */
     background-color: white;
+    
 }
 
 .item-1{
@@ -25,3 +26,48 @@
 .item-9{
     grid-column: 1/3;
 }
+
+.big-box {
+    perspective: 800px;
+  }
+  
+  .small-box {
+    width: 200px;
+    height: 200px;
+    position: relative;
+    transform-style: preserve-3d;
+    animation: rotateX 5s infinite linear;
+  }
+  
+  .small-box div {
+    position: absolute;
+    width: 200px;
+    height: 200px;
+    border: 1px solid #ccc;
+  }
+  
+  .box-1 {
+    transform: translateZ(100px);
+  }
+  
+  .box-2 {
+    transform: rotateX(90deg) translateZ(100px);
+  }
+  
+  .box-3 {
+    transform: rotateX(180deg) translateZ(100px);
+  }
+  
+  .box-4 {
+    transform: rotateX(270deg) translateZ(100px);
+  }
+  
+  @keyframes rotateX {
+    0% {
+      transform: rotateX(0deg);
+    }
+    100% {
+      transform: rotateX(360deg);
+    }
+  }
+  

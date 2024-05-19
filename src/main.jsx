@@ -12,11 +12,14 @@ import './owl.theme.default.css'
 import App from './App';
 import { QueryClientProvider } from '@tanstack/react-query'
 import { queryClient } from './api/query-client';
+import { CookiesProvider } from 'react-cookie';
 
 ReactDOM.createRoot(document.getElementById('root')).render(
 	<React.StrictMode>
 		<QueryClientProvider client={queryClient}>
-			<App />
+			<CookiesProvider defaultSetOptions={{ path: '/' }}>
+				<App />
+			</CookiesProvider>
 		</QueryClientProvider>
 	</React.StrictMode>,
 )
