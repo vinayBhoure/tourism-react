@@ -20,6 +20,8 @@ import Dashboard from './scenes/dashboard';
 import ProtectedRoutes from "./context/ProtectedRoutes";
 import VehicleBooking from "./scenes/vehicleBooking"
 import BookingScreen from './scenes/vehicleBooking/BookingScreen'
+import AttractionDetail from "./scenes/attractions/AttractionDetail";
+import Mice1 from "./scenes/mice1"
 
 
 
@@ -33,7 +35,7 @@ function App() {
 						<Route path="/" element={<HomePage />} />
 						<Route path="/about" element={<AboutUs />} />
 						<Route path="/hotels" element={<HotelBooking />} />
-						<Route path="/hotel/:id" element={<BookingHotel />} />
+						<Route path="/hotel/:id/:from/:to" element={<BookingHotel />} />
 						<Route path="/attractions" element={<Attractions />} />
 						<Route path="/contact" element={<Contact />} />
 						<Route path="/mice" element={<Mice />} />
@@ -57,6 +59,7 @@ function App() {
 						} />
 						<Route path="/vehicles" element={<VehicleBooking />} />
 						<Route path="/vehicle/:transportId" element={<BookingScreen />} />
+						<Route path="/burj-khalifa-dubai.php" element={<AttractionDetail />} />
 					</Routes>
 					<Footer />
 					<Copyright />

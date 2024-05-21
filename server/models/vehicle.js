@@ -14,16 +14,12 @@ const vehicleSchema = new mongoose.Schema({
         type: Number,
         required: true
     },
-    img:{
+    img_url:{
         type: String,
         required: true
     },
     current_bookings:[],
     type:{
-        type: String,
-        required: true
-    },
-    about:{
         type: String,
         required: true
     },

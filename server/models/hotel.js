@@ -1,39 +1,7 @@
 const mongoose = require('mongoose')
 
 const hotelSchema = new mongoose.Schema({
-    hotel_id: {
-        type: Number,
-
-    },
-    brand_id: {
-        type: Number,
-
-    },
-    brand_name: {
-        type: String,
-
-    },
     hotel_name: {
-        type: String,
-
-    },
-    hotel_formerly_name: {
-        type: String,
-
-    },
-    hotel_translated_name: {
-        type: String,
-
-    },
-    addressline1: {
-        type: String,
-
-    },
-    addressline2: {
-        type: String,
-
-    },
-    zipcode: {
         type: String,
 
     },
@@ -53,19 +21,9 @@ const hotelSchema = new mongoose.Schema({
         type: Number,
 
     },
-    url: {
-        type: String,
-
-    },
-    numberrooms: {
-        type: Number,
-
-    },
-    numberfloors: {
-        type: Number,
-    },
     photo1: {
         type: String,
+        required: true,
     },
     photo2: {
         type: String,
@@ -83,20 +41,20 @@ const hotelSchema = new mongoose.Schema({
         type: String,
 
     },
-    city_id: {
-        type: Number,
-
-    },
-    country_id: {
-        type: Number,
-
-    },
     number_of_reviews: {
         type: Number,
-
     },
     rating_average: {
         type: Number,
+    },
+    rentperday: {
+        type: Number,
+        required: true,
+    },
+    current_bookings:[],
+    timestamp: {
+        type: Date,
+        default: Date.now
     }
 })
 

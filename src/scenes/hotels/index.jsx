@@ -2,14 +2,15 @@ import React, { useEffect, useState } from 'react';
 import { Container, Row, Col, Pagination } from 'react-bootstrap';
 import HotelCard from './HotelCard';
 import { FaArrowLeft, FaArrowRight, FaEllipsisH } from 'react-icons/fa';
+import { DatePicker, Space } from 'antd';
 
 const ITEMS_PER_PAGE = 12;
 
 const HotelBooking = () => {
-
+  const { RangePicker } = DatePicker;
   const [currentPage, setCurrentPage] = useState(1);
-  
   const [hotelData, setHotelData] = useState([]);
+  
   async function getHotelData(){
     try{
         const result = await fetch('http://localhost:8000/hotels');
@@ -35,12 +36,27 @@ const HotelBooking = () => {
   useEffect(()=>{
     getHotelData();
   },[])
+
+    const [fromDate, setFromDate] = useState(null)
+		const [toDate, setToDate] = useState(null)
+
+		function filterByDate(dates, dateStrings){
+			console.log('From: ', dateStrings[0], ', to: ', dateStrings[1]);
+			setFromDate(dateStrings[0])
+			setToDate(dateStrings[1])
+		}
+
   return (
     <Container className='mb-5'>
+    <div className="row">
+			<div className="col-md-3">
+           <RangePicker format='DD-MM-YYYY' onChange={filterByDate} />
+			</div>
+		</div>
       <Row>
         {paginatedHotels.map((hotel) => (
-          <Col key={hotel.hotel_id} sm={12} md={6} lg={4}>
-            <HotelCard hotel={hotel} />
+          <Col sm={12} md={6} lg={4}>
+            <HotelCard key={hotel._id} hotel={hotel} fromDate={fromDate} toDate={toDate} />
           </Col>
         ))}
       </Row>

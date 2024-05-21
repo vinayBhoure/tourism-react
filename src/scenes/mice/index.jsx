@@ -12,87 +12,82 @@ const Mice = () => {
       image2: "",
       alter2: ""
     },
-    {
-      image1: "",
-      alter1: "",
-      image2: "",
-      alter2: ""
-    },
-    {
-      image1: "",
-      alter1: "",
-      image2: "",
-      alter2: ""
-    },
-    {
-      image1: "",
-      alter1: "",
-      image2: "",
-      alter2: ""
-    },
-    {
-      image1: "",
-      alter1: "",
-      image2: "",
-      alter2: ""
-    },
-    {
-      image1: "",
-      alter1: "",
-      image2: "",
-      alter2: ""
-    },
-    {
-      image1: "",
-      alter1: "",
-      image2: "",
-      alter2: ""
-    },
-    {
-      image1: "",
-      alter1: "",
-      image2: "",
-      alter2: ""
-    },
-    {
-      image1: "",
-      alter1: "",
-      image2: "",
-      alter2: ""
-    },
-    {
-      image1: "",
-      alter1: "",
-      image2: "",
-      alter2: ""
-    },
-    {
-      image1: "",
-      alter1: "",
-      image2: "",
-      alter2: ""
-    }
+    // {
+    //   image1: "",
+    //   alter1: "",
+    //   image2: "",
+    //   alter2: ""
+    // },
+    // {
+    //   image1: "",
+    //   alter1: "",
+    //   image2: "",
+    //   alter2: ""
+    // },
+    // {
+    //   image1: "",
+    //   alter1: "",
+    //   image2: "",
+    //   alter2: ""
+    // },
+    // {
+    //   image1: "",
+    //   alter1: "",
+    //   image2: "",
+    //   alter2: ""
+    // },
+    // {
+    //   image1: "",
+    //   alter1: "",
+    //   image2: "",
+    //   alter2: ""
+    // },
+    // {
+    //   image1: "",
+    //   alter1: "",
+    //   image2: "",
+    //   alter2: ""
+    // },
+    // {
+    //   image1: "",
+    //   alter1: "",
+    //   image2: "",
+    //   alter2: ""
+    // },
+    // {
+    //   image1: "",
+    //   alter1: "",
+    //   image2: "",
+    //   alter2: ""
+    // },
+    // {
+    //   image1: "",
+    //   alter1: "",
+    //   image2: "",
+    //   alter2: ""
+    // },
+    // {
+    //   image1: "",
+    //   alter1: "",
+    //   image2: "",
+    //   alter2: ""
+    // }
   ]
 
   return (
     <>
-    <div className='big-box'>
-        <div className='small-box'>
-          <div className='box-1'><img src={Mice1} /></div>
-          <div className='box-2'><img src={Mice1_2} /></div>
-          <div className='box-3'><img src={Mice2} /></div>
-          <div className='box-4'><img src={Mice2_2} /></div>
-        </div>
-      </div>
+
       <div className="mice">
         {arr.map((item, idx) => {
           return (
             <div className={`wrapper item-${idx + 1}`}>
-              <div className="area">
-                <div className="box-1"><img src={item.image1} alt={item.alter1} /></div>
-                <div className="box-2"><img src={item.image2} alt={item.alter2} /></div>
-                <div className="box-3"><img src={item.image1} alt={item.alter1} /></div>
-                <div className="box-4"><img src={item.image2} alt={item.alter2} /></div>
+              <div className='big-box'>
+                <div className='small-box'>
+                  <div className='box-1'><img src={Mice1} alt={Mice1} /></div>
+                  <div className='box-2'><img src={Mice1_2} /></div>
+                  <div className='box-3'><img src={Mice2} /></div>
+                  <div className='box-4'><img src={Mice2_2} /></div>
+                </div>
               </div>
 
             </div>)

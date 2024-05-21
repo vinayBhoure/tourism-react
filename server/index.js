@@ -4,6 +4,7 @@ const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const cookieParser = require('cookie-parser');
 const auth = require('./middleware/auth');
+const generateUniqueId = require('generate-unique-id');
 
 const cors = require('cors');
 app.use(cors());
@@ -250,9 +251,32 @@ app.get('/vehicles', async (req, res) => {
 
 app.post('/vehicle/add', auth, async (req, res) => {
     try{
-     const {vehicle_id} = req.body;
+     const {name, capacity, rentperhr, img_url, current_bookings, type} = req.body;
+
+     if(name === "" || capacity === "" || rentperhr === "" || img_url === "" ||type === ""){
+            return res.status(400).json({
+                success: false,
+                error: 'Invalid Data',
+                message: 'All fields are required'
+            });
+     }
+
+     const existingVehicle = await Vehicles.findOne({name});
+        if(existingVehicle){
+            return res.status(400).json({
+                success: false,
+                error: 'Invalid Data',
+                message: 'Vehicle already exists'
+            });
+        }
+
      const newVehicle = new Vehicles({
-            vehicle_id
+            name,
+            capacity,
+            rentperhr,
+            img_url,
+            current_bookings,
+            type
      });
      const vehicle = await newVehicle.save();
 
@@ -295,7 +319,171 @@ app.get('/vehicle/:id', async (req, res) => {
         });
     }
 });
+
+// ATTARCTION ROUTEs
+const Attraction = require('./models/attraction');
+app.get('/attractions', async (req, res) => {
+    try {
+        
+        const result = await Attraction.find();
+
+        return res.status(200).json({
+            success: true,
+            count: result.length,
+            data: result
+        })
+    } catch (err) {
+        return res.status(400).json({
+            success: false,
+            error: 'Server Error',
+            message: err.message
+        });
+    }
+});
+
+app.post('/attraction/add', auth, async (req, res) => {
+    try{
+
+        if(req.body === ""){
+            return res.status(400).json({
+                success: false,
+                error: 'Invalid Data',
+                message: 'All fields are required'
+            });
+        }
+
+        const newAttraction = new Attraction(req.body);
+        const attraction = await newAttraction.save();
+
+        return res.status(200).json({
+            success: true,
+            data: attraction,
+            message: 'Attraction added to database'
+        })
+
+    }catch(err){
+        return res.status(400).json({
+            success: false,
+            error: 'Server Error',
+            message: err.message
+        });
+    }
+});
+
+app.get('attraction/:id', async (req, res) => {
+    try {
+        const attraction = await Attraction.findById(req.params.id);
+
+        if (!attraction) {
+            return res.status(404).json({
+                success: false,
+                error: 'Not Found',
+                message: 'Attraction not found'
+            });
+        }
+
+        return res.status(200).json({
+            success: true,
+            data: attraction
+        });
+    } catch (err) {
+        return res.status(400).json({
+            success: false,
+            error: 'Server Error',
+            message: err.message
+        });
+    }
+});
+
+
 // BOOKING ROUTES
+const Booking = require('./models/bookingVehicle');
+app.post('/booking/vehicle', async(req, res) => {
+    try{
+
+        const {vehicle, vehicle_id, user_id, total_hours, rentperhr, total_amount, status} = req.body;
+
+        const transaction_id = generateUniqueId({
+            length: 12,
+            useLetters: false
+        });
+
+        if(vehicle === "" || vehicle_id === "" || user_id === "" || total_hours === "" || rentperhr === "" || total_amount === "" || status === ""){
+            return res.status(400).json({
+                success: false,
+                error: 'Invalid Data',
+                message: 'All fields are required'
+            });
+        }
+        const newBooking = new Booking({
+            vehicle,
+            vehicle_id,
+            user_id,
+            total_hours,
+            rentperhr,
+            total_amount,
+            transaction_id: transaction_id,
+            status
+        });
+
+        const booking = await newBooking.save();
+        return res.status(200).json({
+            success: true,
+            data: booking,
+            message: 'Vehicle booked successfully'
+        });
+
+    }catch(err){
+        return res.status(400).json({
+            success: false,
+            error: 'Server Error',
+            message: err.message
+        });
+    }
+        })
+
+const BookingH = require('./models/bookingHotel');
+app.post('/booking/hotel', async(req, res) => {
+    try{
+
+        const {hotel, user_id, total_days, rentperday, total_amount} = req.body;
+        const transaction_id = generateUniqueId({
+            length: 12,
+            useLetters: false
+        });
+
+        if(hotel === "" || user_id === "" || total_days === "" || rentperday === "" || total_amount === ""){
+            return res.status(400).json({
+                success: false,
+                error: 'Invalid Data',
+                message: 'All fields are required'
+            });
+        }
+        const newBooking = new BookingH({
+            hotel,
+            user_id,
+            total_days,
+            rentperday,
+            total_amount,
+            transaction_id: transaction_id,
+            status: 'booked'
+        });
+
+        const booking = await newBooking.save();
+        return res.status(200).json({
+            success: true,
+            data: booking,
+            message: 'Hotel booked successfully'
+        });
+
+    }catch(err){
+        return res.status(400).json({
+            success: false,
+            error: 'Server Error',
+            message: err.message
+        });
+    }
+});
 
 app.listen(port, () => {
     console.log(`Example app listening at http://localhost:${port}`);

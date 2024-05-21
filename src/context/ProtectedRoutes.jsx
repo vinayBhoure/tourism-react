@@ -4,7 +4,8 @@ import { Outlet, Navigate } from 'react-router-dom'
 
 
 function ProtectedRoutes() {
-     const user = localStorage.getItem('current-user')
+     const res = localStorage.getItem('current-user')
+     const user = JSON.parse(res)
      
      return (user?.data.role === 'admin') ? <Outlet/> : <Navigate to='/404'/>
 }

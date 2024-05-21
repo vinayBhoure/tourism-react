@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import './vehicle.css'
 import {Link} from 'react-router-dom'
 import { useParams } from 'react-router-dom'
@@ -9,30 +9,80 @@ function BookingScreen() {
     const vehicleId = useParams().transportId;
     const [vehicle, setVehicle] = useState({});
 
+    
+    const [selectedhours, setSelectedhours] = useState(1);
+    const total_amount = (vehicle?.rentperhr * selectedhours);
+    const selectHandler=(e)=>{
+        setSelectedhours(e.target.value);
+    }
+    
     async function getVehicle() {
         try{
             const response = await fetch(`http://localhost:8000/vehicle/${vehicleId}`);
-            const data = await response.json();
-            setVehicle(data);
+            const res = await response.json();
+            if(res.success){
+
+                setVehicle(res.data);
+            }
         }catch(err){
             console.log(err)
         }
     }
+    
+    const bookVehicle = async () => {
 
+        if(!localStorage.getItem('current-user')){
+            alert('Please login to book vehicle');
+            return;
+        }
+        const user = JSON.parse(localStorage.getItem('current-user'));
+        const bookingData = {
+            vehicle: vehicle,
+            vehicle_id: vehicleId,
+            user_id: user.data._id,
+            total_hours: selectedhours,
+            rentperhr: vehicle?.rentperhr,
+            total_amount: total_amount,
+            transaction_id: '',
+            status: 'booked'
+        }
+
+        try{
+           const response = await fetch('http://localhost:8000/booking/vehicle', {
+            method: 'POST',
+            headers:{
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(bookingData)
+        });
+           const res = await response.json();
+              if(res.success){
+                alert('Vehicle booked successfully');
+                window.location.href = '/vehicles';
+              }
+              if(res.error){
+                alert('Vehicle booking failed');
+              }
+              
+        }catch(err){
+            console.log(err)
+        }
+    }
+    
+    useEffect(() => {
+        getVehicle()
+    }, []);
     return (
         <div className='m-5'>
 
             <div className='row justify-content-center mt-5 bs'>
                 <div className='col-md-5'>
                     <h1>{vehicle?.name}</h1>
-                    <img src={vehicle?.img} className='bigimg' />
+                    <img src={vehicle?.img_url} alt={vehicle.img_url} className='bigimg' />
                 </div>
                 <div className='col-md-5'>
                     <div style={{ textAlign: 'left' }}>
                         <h1>Booking Details</h1>
-                        <hr />
-                        <p>Booking From: </p>
-                        <p>Booking To: </p>
                         <hr />
                         <p>Vehicle Name: {vehicle?.name}</p>
                         <p>Vehicle Type: {vehicle?.type}</p>
@@ -40,11 +90,37 @@ function BookingScreen() {
 
                     <div style={{ textAlign: 'left' }}>
                         <h1>Amount</h1>
-                        <p>Total hours: </p>
-                        <p>Rent per hour: </p>
-                        <p>Total amount: </p>
+                        <p>Total hours: 
+                        <select name='selectedhours' onChange={selectHandler}>
+                            <option value="1">1</option>
+                            <option value="2">2</option>
+                            <option value="3">3</option>
+                            <option value="4">4</option>
+                            <option value="5">5</option>
+                            <option value="6">6</option>
+                            <option value="7">7</option>
+                            <option value="8">8</option>
+                            <option value="9">9</option>
+                            <option value="10">10</option>
+                            <option value="11">11</option>
+                            <option value="12">12</option>
+                            <option value="13">13</option>
+                            <option value="14">14</option>
+                            <option value="15">15</option>
+                            <option value="16">16</option>
+                            <option value="17">17</option>
+                            <option value="18">18</option>
+                            <option value="19">19</option>
+                            <option value="20">20</option>
+                            <option value="21">21</option>
+                            <option value="22">22</option>
+                            <option value="23">23</option>
+                            <option value="24">24</option>
+                        </select> </p>
+                        <p>Rent per hour: ${vehicle?.rentperhr} </p>
+                        <p>Total amount: ${total_amount}</p>
                     </div>
-                    <div style={{ float: 'right' }}><button className='btn btn-primary'>Pay Now</button> </div>
+                    <div style={{ float: 'right' }}><button className='btn btn-primary' onClick={bookVehicle}>Pay Now</button> </div>
                 </div>
 
             </div>

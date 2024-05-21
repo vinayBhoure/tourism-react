@@ -9,15 +9,14 @@ function Vehicle({vehicle}) {
     <div>
       <div className='row bs'>
     <div className='col-md-4'>
-        <img src={vehicle.img} alt='vehicle image' className='smallimg'></img>
+        <img src={vehicle.img_url} alt={vehicle.img_url} className='smallimg'></img>
     </div>
       <div className='col-md-7 text-left'>
         <h1>{vehicle.name}</h1>
         <p>Capacity: {vehicle.capacity}</p>
         <p>Type: {vehicle.type}</p>
         <div style={{float: 'right'}}>
-           <Link to= {`/vehicle/54545`} > <button className='btn btn-primary'>Book Now</button></Link>
-            <button className='btn btn-primary'>View More</button>
+           <Link to= {`/vehicle/${vehicle._id}`} > <button className='btn btn-primary'>Book Now</button></Link>
         </div>
       </div>
     </div>
