@@ -10,7 +10,19 @@ function BookingHotel() {
   const [hotelInfo, setHotelInfo] = useState(null);
   
   const { from, to } = useParams();
-  const totalDays = 10; //moment(to).diff(moment(from), 'days');
+
+  function countDaysBetween(fromDate, toDate) {
+    // Parse the dates using the 'MM-DD-YYYY' format
+    const startDate = moment(fromDate, 'MM-DD-YYYY');
+    const endDate = moment(toDate, 'MM-DD-YYYY');
+  
+    // Calculate the difference in days
+    const differenceInDays = endDate.diff(startDate, 'days');
+  
+    return differenceInDays;
+  }
+  
+  const totalDays = countDaysBetween(from, to);
   const total_amount = totalDays * hotelInfo?.rentperday;
 
   async function fetchHotel() {
@@ -45,6 +57,11 @@ function BookingHotel() {
       total_days: totalDays,
       rentperday: hotelInfo.rentperday,
       total_amount: total_amount,
+    }
+
+    const confirm = window.confirm('Are you sure you want to book this hotel?');
+    if (!confirm) {
+      return;
     }
 
     try {
@@ -90,6 +107,14 @@ function BookingHotel() {
             <p>Booking To: {to}</p>
             <hr />
             <p>Hotel Name: {hotelInfo?.hotel_name}</p>
+            <h4>Overiew</h4>
+            <p>{hotelInfo?.overview}</p>
+            <p>Stars: {hotelInfo?.star_rating}</p>
+            <div className='d-flex flex-wrap'>
+              {hotelInfo?.facility?.map((fac, index) => {
+                return <p key={index} className="border border-dark m-2 p-1 rounded " style={{ borderRadius: '25%' }}>{fac}</p>
+              })}
+            </div>
           </div>
           <hr />
           <div style={{ textAlign: 'left' }}>

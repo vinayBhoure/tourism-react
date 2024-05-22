@@ -5,7 +5,7 @@ function ImageCrousal({photos}) {
     return (
         <Carousel className='rounded-4 '>
         {photos.map((photo, index) => {
-            return (
+            return ( photo &&
                 <Carousel.Item key={index}>
                     <img src={photo} alt={`image ${index}`} className='img-fluid shadow bg-body rounded-5 ' />
                 </Carousel.Item>

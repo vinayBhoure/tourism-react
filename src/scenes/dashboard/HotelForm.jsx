@@ -63,7 +63,10 @@ function HotelForm() {
             const res = await response.json();
             if (res.success) {
                 alert('Hotel added successfully')
-
+                navigate('/admin/dashboard')
+            }else{
+                alert('Hotel not added successfully. Error: '+res.message)
+                navigate('/admin/dashboard')
             }
 
         } catch (error) {

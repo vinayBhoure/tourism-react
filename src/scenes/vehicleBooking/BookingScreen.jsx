@@ -47,6 +47,11 @@ function BookingScreen() {
             status: 'booked'
         }
 
+        const confirm = window.confirm('Do you want to book this vehicle?');
+        if(!confirm){
+            return;
+        }
+
         try{
            const response = await fetch('http://localhost:8000/booking/vehicle', {
             method: 'POST',

@@ -16,36 +16,36 @@ function AttractionDetail() {
 
     const icon = [
         {
-            icon: <FaCalendarAlt color="orange" />,
+            icon: <FaCalendarAlt color="orange" size={'2rem'}/>,
             title: "Availability: Daily"
         },
         {
-            icon: <GiSandsOfTime />,
+            icon: <GiSandsOfTime color="orange"size={'2rem'} />,
             alt: "Duration:5 - 6 Hours (Approx)",
             title: "Duration:5 - 6 Hours (Approx)",
         },
         {
-            icon: <GiSandsOfTime />,
+            icon: <GiSandsOfTime color="orange" size={'2rem'}/>,
             alt: "Starting Time : 14:30:00",
             title: "Starting Time : 14:30:00",
         },
         {
-            icon: <FaBusAlt />,
+            icon: <FaBusAlt color="orange" size={'2rem'}/>,
             alt: "Pick up & Drop Back",
             title: "Pick up & Drop Back"
         },
         {
-            icon: <FcCancel />,
+            icon: <FcCancel color="orange" size={'2rem'} />,
             alt: "Free Cancellation 24 hours Prior",
             title: "Free Cancellation 24 hours Prior",
         },
         {
-            icon: <LuPrinter />,
+            icon: <LuPrinter color="orange" size={'2rem'}/>,
             alt: "Printed Voucher Accepted",
             title: "Printed Voucher Acceptedily",
         },
-        { icon: <IoLanguage />, alt: "English / Arabic", title: "English / Arabic" },
-        { icon: <AiFillThunderbolt />, alt: "Instant Confirmation", title: "Instant Confirmation" },
+        { icon: <IoLanguage color="orange" size={'2rem'}/>, alt: "English / Arabic", title: "English / Arabic" },
+        { icon: <AiFillThunderbolt color="orange" size={'2rem'}/>, alt: "Instant Confirmation", title: "Instant Confirmation" },
     ];
 
     const List = ({ list }) => {
@@ -75,6 +75,7 @@ function AttractionDetail() {
             const response = await fetch(`http://localhost:8000/attraction/${id}`);
             const data = await response.json();
             setInfo(data.data);
+            setBigImg(data.data.images[0]);
             console.log(data);
         } catch (err) {
             console.log(err);
@@ -82,7 +83,6 @@ function AttractionDetail() {
     };
     useEffect(() => {
         getData();
-        setBigImg(info?.images[0]);
     }, [])
     return (
         <div className='mb-5'>
@@ -104,21 +104,21 @@ function AttractionDetail() {
 
                             </div>
                             <div className="d-flex small-img mt-2">
-                                {info?.images[0] && <img className="m-2 bg-danger" onClick={() => onChangeImage(0)} src={info?.images[0]} alt="image1" />}
-                                {info?.images[1] && <img className="m-2 bg-danger" onClick={() => onChangeImage(1)} src={info?.images[1]} alt="image2" />}
-                                {info?.images[2] && <img className="m-2 bg-danger" onClick={() => onChangeImage(2)} src={info?.images[2]} alt="image3" />}
-                                {info?.images[3] && <img className="m-2 bg-danger" onClick={() => onChangeImage(3)} src={info?.images[3]} alt="image4" />}
+                                {info?.images && info?.images[0] && <img className="m-2 bg-danger" onClick={() => onChangeImage(0)} src={info?.images[0]} alt="image1" />}
+                                {info?.images && info?.images[1] && <img className="m-2 bg-danger" onClick={() => onChangeImage(1)} src={info?.images[1]} alt="image2" />}
+                                {info?.images && info?.images[2] && <img className="m-2 bg-danger" onClick={() => onChangeImage(2)} src={info?.images[2]} alt="image3" />}
+                                {info?.images && info?.images[3] && <img className="m-2 bg-danger" onClick={() => onChangeImage(3)} src={info?.images[3]} alt="image4" />}
                             </div>
                         </div>
                     </div>
                     <div className="col-md-6">
                         <div style={{ width: "80%" }} className="m-auto sm:text-center">
                             <h2 style={{ color: "#EE7746" }} className="font-weight-bold">
-                                {info?.title.toUpperCase()}
+                                {info?.title && info?.title.toUpperCase()}
                             </h2>
-                            {info?.description[0] && <p>{info?.description[0]}</p>}
-                            {info?.description[1] && <p>{info?.description[1]}</p>}
-                            {info?.description[2] && <p>{info?.description[2]}</p>}
+                            {info?.description && info?.description[0] && <p>{info?.description[0]}</p>}
+                            {info?.description && info?.description[1] && <p>{info?.description[1]}</p>}
+                            {info?.description && info?.description[2] && <p>{info?.description[2]}</p>}
                         </div>
                     </div>
                 </div>
@@ -151,7 +151,7 @@ function AttractionDetail() {
                     </div>
                 </ScrollAnimation>
                 <ScrollAnimation>
-                    <div className="row mb-5">
+                   { info?.inclusions > 0 && <div className="row mb-5">
                         <div className="col text-center">
                             <h2
                                 className="section_title commn-heading aos-init aos-animate"
@@ -161,22 +161,22 @@ function AttractionDetail() {
                                 <span className="yellow-shape">INCLUSIONS</span>
                             </h2>
                         </div>
-                    </div>
+                    </div>}
                 </ScrollAnimation>
                 <ScrollAnimation>
                     <div className="row  text-black">
                         <div className="col-md-6">
 
                             <ul>
-                                {info?.inclusions.map((x, index) => {
-                                    return (index < 3) && <List key={index} list={x} />
+                                {info?.inclusions > 0 && info?.inclusions.map((x, index) => {
+                                    return (index < info?.inclusions.length/2 ) && <List key={index} list={x} />
                                 })}
                             </ul>
                         </div>
                         <div className="col-md-6">
                             <ul>
-                                {info?.inclusions.map((x, index) => {
-                                    return (index >= 3) && <List key={index} list={x} />
+                                {info?.inclusions > 0 && info?.inclusions.map((x, index) => {
+                                    return (index >= info?.inclusions.length/2) && <List key={index} list={x} />
                                 })}
                             </ul>
                         </div>
@@ -199,15 +199,15 @@ function AttractionDetail() {
                     <div className="row text-black">
                         <div className="col-md-6">
                             <ul>
-                                {info?.reason.map((x, index) => {
-                                    return (index < 3) && <List key={index} list={x} />
+                                {info?.reason && info?.reason.map((x, index) => {
+                                    return (index < info?.reason.length/2) && <List key={index} list={x} />
                                 })}
                             </ul>
                         </div>
                         <div className="col-md-6">
                             <ul>
-                                {info?.reason.map((x, index) => {
-                                    return (index >= 3) && <List key={index} list={x} />
+                                {info?.reason && info?.reason.map((x, index) => {
+                                    return (index >= info?.reason.length/2) && <List key={index} list={x} />
                                 })}
                             </ul>
                         </div>
@@ -230,15 +230,15 @@ function AttractionDetail() {
                     <div className="row text-black">
                         <div className="col-md-6">
                             <ul>
-                                {info?.advantage.map((x, index) => {
-                                    return (index < 3) && <List key={index} list={x} />
+                                {info?.advantage && info?.advantage.map((x, index) => {
+                                    return (index < info?.advantage.length/2) && <List key={index} list={x} />
                                 })}
                             </ul>
                         </div>
                         <div className="col-md-6">
                             <ul>
-                                {info?.advantage.map((x, index) => {
-                                    return (index >= 3) && <List key={index} list={x} />
+                                {info?.advantage && info?.advantage.map((x, index) => {
+                                    return (index >= info?.advantage.length/2) && <List key={index} list={x} />
                                 })}
                             </ul>
                         </div>
@@ -261,15 +261,15 @@ function AttractionDetail() {
                     <div className="row text-black">
                         <div className="col-md-6">
                             <ul>
-                                {info?.information.map((x, index) => {
-                                    return (index % 2 == 0) && <List key={index} list={x} />
+                                {info?.information && info?.information.map((x, index) => {
+                                    return (index < info?.information.length/2) && <List key={index} list={x} />
                                 })}
                             </ul>
                         </div>
                         <div className="col-md-6">
                             <ul>
-                                {info?.information.map((x, index) => {
-                                    return (index % 2 == 1) && <List key={index} list={x} />
+                                {info?.information && info?.information.map((x, index) => {
+                                    return (index >= info?.information.length/2) && <List key={index} list={x} />
                                 })}
                             </ul>
                         </div>
@@ -292,14 +292,14 @@ function AttractionDetail() {
                     <div className="row text-black">
                         <div className="col-md-6">
                             <ul>
-                                {info?.booking_policy.map((x, index) => {
+                                {info?.booking_policy && info?.booking_policy.map((x, index) => {
                                     return <List key={index} list={x} />
                                 })}
                             </ul>
 
                         </div>
                         <div className="col-md-6">
-                            <img src={info?.images[0]} style={{ height: '25rem' }} alt="image" />
+                            { info?.images && <img src={info?.images[0]} style={{ height: '25rem' }} alt="image" />}
                         </div>
                     </div>
                 </ScrollAnimation>

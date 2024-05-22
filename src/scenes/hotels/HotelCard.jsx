@@ -56,9 +56,9 @@ function HotelCard({ hotel, fromDate, toDate }) {
         <Card.Body>
           <Card.Title className="font-bold text-xl mb-2">{hotel.hotel_name}</Card.Title>
           <Card.Subtitle className="text-gray-500 mb-2">
-            {hotel.city}, {hotel.state}
+            {hotel.city}, {hotel.state}, {hotel.country}
           </Card.Subtitle>
-          <Card.Text className="text-gray-500">{hotel.overview}</Card.Text>
+          <Card.Text className="text-gray-500">{hotel.overview.slice(0,200) + "..."}</Card.Text>
           <div className="d-flex align-items-center mt-4">
             {/* Render star ratings based on average rating */}
             {Array.from({ length: Math.floor(hotel.star_rating) }, (_, index) => (

@@ -1,5 +1,6 @@
 import React from 'react'
 import { Button, Form, Input, Select, Space } from 'antd';
+import { useNavigate } from 'react-router-dom';
 
 function VehicleForm() {
     const layout = {
@@ -13,6 +14,7 @@ function VehicleForm() {
 
     const [form] = Form.useForm();
 
+    const navigate = useNavigate();
     const onFinish = async (values) => {
 
         const DataToSend = {
@@ -39,9 +41,11 @@ function VehicleForm() {
              const res = await response.json();
              if(res.success){
                 alert('Vehicle added successfully')
+                navigate('/admin/dashboard')
              }
              if(!res.success){
                 alert("Error Message: " + res.message);
+                navigate('/admin/dashboard')
              }
 
         }catch(error){

@@ -8,6 +8,8 @@ import { useCurrentUserQuery } from "../api/query/auth";
 import { faRightFromBracket } from "@fortawesome/free-solid-svg-icons";
 import { useLogoutMutation } from "../api/mutation/auth";
 import { useUserContext } from "../context/userContext";
+import { MdMenuOpen } from "react-icons/md";
+import { IoMdExit } from "react-icons/io";
 
 
 const UserAccount = () => {
@@ -92,9 +94,7 @@ const Header = () => {
 						</ul>
 					</nav>
 					<div className="hamburger" onClick={toggleMenu}>
-						<div className="bar"></div>
-						<div className="bar"></div>
-						<div className="bar"></div>
+					{showMenu ? <IoMdExit size={'2rem'}/> :<MdMenuOpen size={'2rem'}/> }
 					</div>
 				</div>
 			</div>

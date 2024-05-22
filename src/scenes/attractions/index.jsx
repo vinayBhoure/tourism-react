@@ -32,11 +32,11 @@ const Attractions = () => {
             <div className="container-fluid p-5 attraction-all-img aos-init aos-animate" data-aos="fade-up" data-aos-duration="1000">
                 <div className="row">
                     { attractionArray.length > 0 ? attractionArray.map((attraction, i) => (
-                        <div className="col-lg-4 col-md-6 col-sm-12 attraction-col">
+                        <div className="col-lg-4 col-md-6 col-sm-12 attraction-col" key={i}>
                             <div className="owl-item-hover">
                                 <div className="test_item-hover_img">
                                     <div className="test-images">
-                                        <AttractionCard key={i} info={attraction} />
+                                        <AttractionCard  info={attraction} />
                                     </div>
                                 </div>
                             </div>
