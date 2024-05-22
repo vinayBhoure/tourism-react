@@ -11,26 +11,11 @@ const AttractionSchema = new mongoose.Schema({
         required: true
     }],
     description: [],
-    booking_policy:{
-        cancellation:{
-            type: [],
-            required: true
-        },
-        child:{
-            type: [],
-            required: true
-        }
-    },
+    booking_policy:[],
     information:[],
     advantage:[],
     reason:[],
-    inclusions:[{
-        heading:{
-            type: String,
-            required: true
-        },
-        description:[]
-    }]
+    inclusions:[]
 
 });
 

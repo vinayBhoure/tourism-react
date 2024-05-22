@@ -1,15 +1,16 @@
 import React from 'react'
+import { Link } from 'react-router-dom';
 
-function AttractionCard() {
+function AttractionCard({info}) {
   return (
-    <a className="first-img item-hover clean attraction-gallery aos-init aos-animate" href="burj-khalifa-dubai.php" data-aos="fade-up" data-aos-duration="2000">
-    <img src="images/burj-khalifa/burj-khalifa-booking.jpg" alt="burj-khalifa" className="our-img"/>
+    <Link  style={{height:'200px', width:'80%'}} className="first-img item-hover clean attraction-gallery aos-init aos-animate" to={`${info._id}`} data-aos="fade-up" data-aos-duration="2000">
+    <img src={info?.images[0]} alt="burj-khalifa" className="our-img"/>
     <div className="overlay">
         <span> </span>
-        <span>Burj Khalifa</span>
+        <span>{info.title}</span>
         <span></span>
     </div>
-</a>
+</Link>
   )
 }
 

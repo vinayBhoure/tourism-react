@@ -10,14 +10,14 @@ const HotelBooking = () => {
   const { RangePicker } = DatePicker;
   const [currentPage, setCurrentPage] = useState(1);
   const [hotelData, setHotelData] = useState([]);
-  
-  async function getHotelData(){
-    try{
-        const result = await fetch('http://localhost:8000/hotels');
-        const res = await result.json();
-        console.log(res.data);
-        setHotelData(res.data);
-    }catch(error){
+
+  async function getHotelData() {
+    try {
+      const result = await fetch('http://localhost:8000/hotels');
+      const res = await result.json();
+      console.log(res.data);
+      setHotelData(res.data);
+    } catch (error) {
       console.log(error);
     }
   }
@@ -33,34 +33,34 @@ const HotelBooking = () => {
     }
   };
 
-  useEffect(()=>{
+  useEffect(() => {
     getHotelData();
-  },[])
+  }, [])
 
-    const [fromDate, setFromDate] = useState(null)
-		const [toDate, setToDate] = useState(null)
+  const [fromDate, setFromDate] = useState(null)
+  const [toDate, setToDate] = useState(null)
 
-		function filterByDate(dates, dateStrings){
-			console.log('From: ', dateStrings[0], ', to: ', dateStrings[1]);
-			setFromDate(dateStrings[0])
-			setToDate(dateStrings[1])
-		}
+  function filterByDate(dates, dateStrings) {
+    console.log('From: ', dateStrings[0], ', to: ', dateStrings[1]);
+    setFromDate(dateStrings[0])
+    setToDate(dateStrings[1])
+  }
 
   return (
     <Container className='mb-5'>
-    <div className="row">
-			<div className="col-md-3">
-           <RangePicker format='DD-MM-YYYY' onChange={filterByDate} />
-			</div>
-		</div>
+    <div className='d-flex justify-content-center mt-4 mb-3 p-2'>
+
+          <RangePicker format='DD-MM-YYYY' onChange={filterByDate} />
+    </div>
+      
       <Row>
-        {paginatedHotels.map((hotel) => (
+        { paginatedHotels.length > 0 ? paginatedHotels.map((hotel) => (
           <Col sm={12} md={6} lg={4}>
             <HotelCard key={hotel._id} hotel={hotel} fromDate={fromDate} toDate={toDate} />
           </Col>
-        ))}
+        )) : <h1 className='text-center'>No Hotels available at present moment</h1>}
       </Row>
-      <Row className="justify-content-center mt-4">
+      { paginatedHotels.length > 0 && <Row className="justify-content-center mt-4">
         <Col xs={12}>
           <Pagination className="justify-content-center">
             {/* Previous button */}
@@ -102,7 +102,7 @@ const HotelBooking = () => {
             </Pagination.Next>
           </Pagination>
         </Col>
-      </Row>
+      </Row>}
     </Container>
   );
 };

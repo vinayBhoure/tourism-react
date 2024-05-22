@@ -21,7 +21,9 @@ import ProtectedRoutes from "./context/ProtectedRoutes";
 import VehicleBooking from "./scenes/vehicleBooking"
 import BookingScreen from './scenes/vehicleBooking/BookingScreen'
 import AttractionDetail from "./scenes/attractions/AttractionDetail";
-import Mice1 from "./scenes/mice1"
+import HotelForm from "./scenes/dashboard/HotelForm";
+import AttractionForm from "./scenes/dashboard/AttractionForm";
+import VehicleForm from "./scenes/dashboard/VehicleForm";
 
 
 
@@ -46,20 +48,20 @@ function App() {
 						<Route path="/privacy" element={<Privacy />} />
 						<Route path="/login" element={<LoginPage />} />
 						<Route path="/signup" element={<SignUpPage />} />
-						<Route element={<ProtectedRoutes />}>
-							<Route path="/admin/dashboard" element={<Dashboard />} />
-						</Route>
-						<Route path="/404" element={
-							<>
-								<div>
-									<h1>404</h1>
-									<p>Page Not Found</p>
-								</div>
-							</>
-						} />
 						<Route path="/vehicles" element={<VehicleBooking />} />
 						<Route path="/vehicle/:transportId" element={<BookingScreen />} />
-						<Route path="/burj-khalifa-dubai.php" element={<AttractionDetail />} />
+						<Route path="/attractions/:id" element={<AttractionDetail />} />
+						<Route element={<ProtectedRoutes />}>
+							<Route path="/admin/dashboard" element={<Dashboard />} />
+							<Route path="/admin/dashboard/add/hotel" element={<HotelForm />} />
+							<Route path="/admin/dashboard/add/vehicle" element={<VehicleForm/>} />
+							<Route path="/admin/dashboard/add/attraction" element={<AttractionForm />} />
+						</Route>
+
+						<Route path="/404" element={<div>
+							<h1 className="text-center m-5"> You are not an authorised person</h1>
+						</div>} />
+						<Route path="*" element={<Navigate to="/" />} />
 					</Routes>
 					<Footer />
 					<Copyright />

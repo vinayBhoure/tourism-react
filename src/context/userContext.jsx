@@ -53,6 +53,9 @@ export const UserContextProvider = ({ children }) => {
         if (data.success) {
             localStorage.removeItem('current-user');
             setAuthUser(null)
+            navigate('/login', {
+                replace: true
+            })
         } else {
             console.log("logout failed")
         }

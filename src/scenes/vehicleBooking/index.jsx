@@ -34,7 +34,7 @@ const VehicleBooking = () => {
 							return <Vehicle key={item._id} vehicle={item}/>
 						})}
 					</>
-					) : <h1>No vehicles available</h1>}
+					) : <h1 className="text-center mb-5">No vehicles available</h1>}
 				</div>
 
 			</div>

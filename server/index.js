@@ -37,18 +37,41 @@ app.get('/hotels', async (req, res) => {
     }
 });
 
-app.post('/hotel/add', auth, async (req, res) => {
+app.post('/hotel/add', async (req, res) => {
     try {
-        console.log(req.user);
-        const {
-            hotel_id
-        } = await Hotel.create(req.body);
+        const {hotel_name, city, state, country, star_rating, photo1, photo2, photo3, photo4, overview, rating_average, rentperday, facility} = req.body;
+        
+        if (!hotel_name || !city || !state || !country || !star_rating || !photo1 || !photo2 || !photo3 || !photo4 || !overview || !rating_average || !rentperday || !facility) {
+            return res.status(400).json({
+                success: false,
+                error: 'Invalid Data',
+                message: 'All fields are required'
+            });
+        }
 
         const newHotel = new Hotel({
-
-        })
+            hotel_name,
+            city,
+            state,
+            country,
+            star_rating,
+            photo1,
+            photo2,
+            photo3,
+            photo4,
+            overview,
+            rating_average,
+            rentperday,
+            facility
+        });
 
         const hotel = await newHotel.save();
+
+        res.status(201).send({
+            success: true,
+            data: hotel,
+            message: 'Hotel added to database'
+        });
 
         return res.status(201).json({
             success: true,
@@ -62,6 +85,32 @@ app.post('/hotel/add', auth, async (req, res) => {
             message: err.message
         });
     }
+})
+
+app.delete('/hotels/delete/:id', async (req, res) => {
+    try{
+        const id = req.params.id;
+        const hotel = await Hotel.findByIdAndDelete(id);
+        if(!hotel){
+            return res.status(404).json({
+                success: false,
+                error: 'Not Found',
+                message: 'Hotel does not exist'
+            });
+        }
+        return res.status(200).json({
+            success: true,
+            message: 'Hotel deleted successfully'
+        });
+        
+        }catch(err){
+            return res.status(400).json({
+                success: false,
+                error: 'Server Error',
+                message: err.message
+            });
+        
+        }
 })
 
 app.get('/hotel/:id', async (req, res) => {
@@ -249,11 +298,12 @@ app.get('/vehicles', async (req, res) => {
     }
 });
 
-app.post('/vehicle/add', auth, async (req, res) => {
+app.post('/vehicle/add',  async (req, res) => {
     try{
      const {name, capacity, rentperhr, img_url, current_bookings, type} = req.body;
 
-     if(name === "" || capacity === "" || rentperhr === "" || img_url === "" ||type === ""){
+     console.log(req.body);
+     if(!name || !capacity || !rentperhr || !img_url || !type){
             return res.status(400).json({
                 success: false,
                 error: 'Invalid Data',
@@ -294,6 +344,33 @@ app.post('/vehicle/add', auth, async (req, res) => {
         });
     }
 });
+
+app.delete('/vehicles/delete/:id', async (req, res) => {
+    try{
+    const id = req.params.id;
+    const vehicle = await Vehicles.findByIdAndDelete(id);
+    if(!vehicle){
+        return res.status(404).json({
+            success: false,
+            error: 'Not Found',
+            message: 'Vehicle does not exist'
+        });
+    }
+    return res.status(200).json({
+        success: true,
+        message: 'Vehicle deleted successfully'
+    });
+
+    }catch(err){
+        return res.status(400).json({
+            success: false,
+            error: 'Server Error',
+            message: err.message
+        });
+    
+    }
+});
+
 
 app.get('/vehicle/:id', async (req, res) => {
     try {
@@ -341,7 +418,7 @@ app.get('/attractions', async (req, res) => {
     }
 });
 
-app.post('/attraction/add', auth, async (req, res) => {
+app.post('/attraction/add',  async (req, res) => {
     try{
 
         if(req.body === ""){
@@ -370,7 +447,33 @@ app.post('/attraction/add', auth, async (req, res) => {
     }
 });
 
-app.get('attraction/:id', async (req, res) => {
+app.delete('/attractions/delete/:id', async (req, res) => {
+    try{
+        const id = req.params.id;
+        const attraction = await Attraction.findByIdAndDelete(id);
+        if(!attraction){
+            return res.status(404).json({
+                success: false,
+                error: 'Not Found',
+                message: 'Attraction does not exist'
+            });
+        }
+        return res.status(200).json({
+            success: true,
+            message: 'Attraction deleted successfully'
+        });
+        
+        }catch(err){
+            return res.status(400).json({
+                success: false,
+                error: 'Server Error',
+                message: err.message
+            });
+        
+        }
+})
+
+app.get('/attraction/:id', async (req, res) => {
     try {
         const attraction = await Attraction.findById(req.params.id);
 

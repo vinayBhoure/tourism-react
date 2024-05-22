@@ -41,9 +41,6 @@ const hotelSchema = new mongoose.Schema({
         type: String,
 
     },
-    number_of_reviews: {
-        type: Number,
-    },
     rating_average: {
         type: Number,
     },
@@ -51,7 +48,7 @@ const hotelSchema = new mongoose.Schema({
         type: Number,
         required: true,
     },
-    current_bookings:[],
+    facility:[],
     timestamp: {
         type: Date,
         default: Date.now
