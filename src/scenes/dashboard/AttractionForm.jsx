@@ -222,13 +222,13 @@ function AttractionForm() {
                 <h4 style={{color:'black'}}>THE DUBAI TOURS ADVANTAGE (At least 3 point is required)</h4>
               
                 <br />
-                <Form.Item name="advantage1" label="Advantage 1" rules={[{ required: true }]}>
+                <Form.Item name="advantage1" label="Advantage 1" >
                     <Input />
                 </Form.Item>
-                <Form.Item name="advantage2" label="Advantage 2" rules={[{ required: true }]}>
+                <Form.Item name="advantage2" label="Advantage 2" >
                     <Input />
                 </Form.Item>
-                <Form.Item name="advantage3" label="Advantage 3" rules={[{ required: true }]}>
+                <Form.Item name="advantage3" label="Advantage 3" >
                     <Input />
                 </Form.Item>
                 <Form.Item name="advantage4" label="Advantage 4" >

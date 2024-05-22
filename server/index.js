@@ -555,7 +555,7 @@ app.post('/booking/hotel', async(req, res) => {
             useLetters: false
         });
 
-        if(hotel === "" || user_id === "" || total_days === "" || rentperday === "" || total_amount === ""){
+        if(!hotel || !user_id || !rentperday || !transaction_id){
             return res.status(400).json({
                 success: false,
                 error: 'Invalid Data',

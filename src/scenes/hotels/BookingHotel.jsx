@@ -5,10 +5,10 @@ import ImageCrousal from './ImageCrousal';
 import moment from 'moment';
 
 function BookingHotel() {
-  
+
   const hotelid = useParams().id
   const [hotelInfo, setHotelInfo] = useState(null);
-  
+
   const { from, to } = useParams();
 
   function countDaysBetween(fromDate, toDate) {
@@ -25,11 +25,12 @@ function BookingHotel() {
   const totalDays = countDaysBetween(from, to);
   const total_amount = totalDays * hotelInfo?.rentperday;
 
+
   async function fetchHotel() {
     try {
       const result = await fetch(`http://localhost:8000/hotel/${hotelid}`)
       const res = await result.json()
-      if(!res.success){
+      if(!res.success) {
         alert('Hotel not found');
         window.location.href = '/hotels';
         return;
@@ -39,9 +40,32 @@ function BookingHotel() {
       console.log(err)
     }
   }
-  useEffect(() => {
-    fetchHotel()
-  }, [])
+
+  // function sendMail({ bookingData }) {
+
+  //   (function () {
+  //     emailjs.init("CHATVUtbqB7CyZijK")
+  //   })();
+
+  //   const user = JSON.parse(localStorage.getItem('current-user'));
+  //   var params = {
+  //     sendername: "BTP Tourism",
+  //     to: user.data.email,
+  //     subject: "Sending Booking Invoice",
+  //     replyto: "btp.tourism@gmail.com",
+  //     message: bookingData
+  //   }
+
+  //   var service_id = "service_8uvfi1d";
+  //   var template_id = "template_z7y3cjo";
+
+  //   emailjs.send(service_id, template_id, params).then(
+  //     res => {
+  //       alter('Email sent successfully')
+  //     }).catch(err => {
+  //       alert('Email sending failed')
+  //     })
+  // }
 
   const bookHotel = async () => {
 
@@ -75,6 +99,7 @@ function BookingHotel() {
       const res = await response.json();
       if (res.success) {
         alert('Hotel booked successfully');
+        // sendMail({ bookingData });
         window.location.href = '/hotels';
       }
       if (res.error) {
@@ -86,6 +111,9 @@ function BookingHotel() {
     }
   }
 
+  useEffect(() => {
+    fetchHotel()
+  }, [])
 
 
   return (
@@ -93,7 +121,7 @@ function BookingHotel() {
     <div className='m-5'>
 
       <div className='row justify-content-center mt-5 bs'>
-        <div className='col-md-5'>
+        <div className='col-md-12 col-lg-6'>
           <h1 className='fs-3 mb-0'>{hotelInfo?.hotel_name}</h1>
           <p className='fw-light '>{hotelInfo?.city + ", " + hotelInfo?.state + ", " + hotelInfo?.country}</p>
           <hr />
@@ -121,7 +149,7 @@ function BookingHotel() {
             <h1>Amount</h1>
             <p>Total days: {totalDays} </p>
             <p>Rent per day: ${hotelInfo?.rentperday} </p>
-            <p>Total amount: ${hotelInfo?.rentperday * totalDays }</p>
+            <p>Total amount: ${total_amount}</p>
           </div>
           <div style={{ float: 'right' }}><button className='btn btn-primary' onClick={bookHotel}>Pay Now</button> </div>
         </div>

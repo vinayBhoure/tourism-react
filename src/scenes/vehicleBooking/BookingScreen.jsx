@@ -3,6 +3,7 @@ import './vehicle.css'
 import {Link} from 'react-router-dom'
 import { useParams } from 'react-router-dom'
 import { useState } from 'react'
+// import emailjs from 'emailjs'
 
 function BookingScreen() {
 
@@ -28,6 +29,32 @@ function BookingScreen() {
             console.log(err)
         }
     }
+
+    // function sendMail({ bookingData }) {
+
+    //     (function () {
+    //       emailjs.init("CHATVUtbqB7CyZijK")
+    //     })();
+    
+    //     const user = JSON.parse(localStorage.getItem('current-user'));
+    //     var params = {
+    //       sendername: "BTP Tourism",
+    //       to: user.data.email,
+    //       subject: "Sending Booking Invoice",
+    //       replyto: "btp.tourism@gmail.com",
+    //       message: bookingData
+    //     }
+    
+    //     var service_id = "service_8uvfi1d";
+    //     var template_id = "template_z7y3cjo";
+    
+    //     emailjs.send(service_id, template_id, params).then(
+    //       res => {
+    //         alter('Email sent successfully')
+    //       }).catch(err => {
+    //         alert('Email sending failed')
+    //       })
+    //   }
     
     const bookVehicle = async () => {
 
@@ -63,6 +90,7 @@ function BookingScreen() {
            const res = await response.json();
               if(res.success){
                 alert('Vehicle booked successfully');
+                // sendMail({bookingData});
                 window.location.href = '/vehicles';
               }
               if(res.error){
@@ -81,7 +109,7 @@ function BookingScreen() {
         <div className='m-5'>
 
             <div className='row justify-content-center mt-5 bs'>
-                <div className='col-md-5'>
+                <div className='col-md-12 col-lg-6'>
                     <h1>{vehicle?.name}</h1>
                     <img src={vehicle?.img_url} alt={vehicle.img_url} className='bigimg' />
                 </div>

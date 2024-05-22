@@ -11,7 +11,7 @@ const bookingHotelSchema = new mongoose.Schema({
     },
     total_days: {
         type: Number,
-        required: true
+        // required: true
     },
     rentperday: {
         type: Number,
@@ -19,7 +19,7 @@ const bookingHotelSchema = new mongoose.Schema({
     },
     total_amount: {
         type: Number,
-        required: true
+        // required: true
     },
     transaction_id: {
         type: String,

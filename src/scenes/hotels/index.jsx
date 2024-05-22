@@ -3,6 +3,7 @@ import { Container, Row, Col, Pagination } from 'react-bootstrap';
 import HotelCard from './HotelCard';
 import { FaArrowLeft, FaArrowRight, FaEllipsisH } from 'react-icons/fa';
 import { DatePicker, Space } from 'antd';
+import moment from 'moment';
 
 const ITEMS_PER_PAGE = 12;
 
