@@ -11,18 +11,25 @@ function BookingHotel() {
 
   const { from, to } = useParams();
 
-  function countDaysBetween(fromDate, toDate) {
-    // Parse the dates using the 'MM-DD-YYYY' format
-    const startDate = moment(fromDate, 'MM-DD-YYYY');
-    const endDate = moment(toDate, 'MM-DD-YYYY');
+  function parseDate(dateString) {
+    const parts = dateString.split('-');
+    const day = parseInt(parts[0], 10);
+    const month = parseInt(parts[1], 10) - 1;
+    const year = parseInt(parts[2], 10);
+    return new Date(year, month, day);
+}
+
+function countDaysBetweenDates(date1, date2) {
+    const startDate = parseDate(date1);
+    const endDate = parseDate(date2);
+    const timeDifference = endDate - startDate;
+    const millisecondsPerDay = 24 * 60 * 60 * 1000;
+    const dayDifference = timeDifference / millisecondsPerDay;
+    return dayDifference;
+}
+
   
-    // Calculate the difference in days
-    const differenceInDays = endDate.diff(startDate, 'days');
-  
-    return differenceInDays;
-  }
-  
-  const totalDays = countDaysBetween(from, to);
+  const totalDays = countDaysBetweenDates(from,to);
   const total_amount = totalDays * hotelInfo?.rentperday;
 
 
@@ -41,36 +48,11 @@ function BookingHotel() {
     }
   }
 
-  // function sendMail({ bookingData }) {
-
-  //   (function () {
-  //     emailjs.init("CHATVUtbqB7CyZijK")
-  //   })();
-
-  //   const user = JSON.parse(localStorage.getItem('current-user'));
-  //   var params = {
-  //     sendername: "BTP Tourism",
-  //     to: user.data.email,
-  //     subject: "Sending Booking Invoice",
-  //     replyto: "btp.tourism@gmail.com",
-  //     message: bookingData
-  //   }
-
-  //   var service_id = "service_8uvfi1d";
-  //   var template_id = "template_z7y3cjo";
-
-  //   emailjs.send(service_id, template_id, params).then(
-  //     res => {
-  //       alter('Email sent successfully')
-  //     }).catch(err => {
-  //       alert('Email sending failed')
-  //     })
-  // }
 
   const bookHotel = async () => {
 
     if (!localStorage.getItem('current-user')) {
-      alert('Please login to book vehicle');
+      alert('Please login to book hotel');
       return;
     }
     console.log(hotelInfo)
@@ -154,7 +136,7 @@ function BookingHotel() {
             <p>Rent per day: ${hotelInfo?.rentperday} </p>
             <p>Total amount: ${total_amount}</p>
           </div>
-          <div style={{ float: 'right' }}><button className='btn btn-primary' onClick={bookHotel}>Pay Now</button> </div>
+          <div style={{ float: 'right' }}><button className='btn btn-primary' onClick={bookHotel}>Book Now</button> </div>
         </div>
 
       </div>

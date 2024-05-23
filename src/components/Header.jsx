@@ -13,8 +13,8 @@ import { IoMdExit } from "react-icons/io";
 
 
 const UserAccount = () => {
-
 	const { authUser, logoutUser } = useUserContext();
+
 	// const logoutMutation = useLogoutMutation()
 
 	return (<div>
@@ -48,6 +48,7 @@ const UserAccount = () => {
 
 const Header = () => {
 	const [showMenu, setShowMenu] = useState(false);
+	const { authUser } = useUserContext();
 
 
 	const toggleMenu = () => {
@@ -85,9 +86,9 @@ const Header = () => {
 								<Link to="/contact">CONTACT</Link>
 							</li>
 
-							<li>
+							{authUser && <li>
 								<Link to="/admin/dashboard">Dashboard</Link>
-							</li>
+							</li>}
 
 							<UserAccount />
 						</ul>

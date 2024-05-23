@@ -11,6 +11,11 @@ import Database from "./Database";
 export default function Component() {
 
     const user = JSON.parse(localStorage.getItem("current-user"));
+    if (!user) {
+        alert("Please login first");
+        window.open('/login');
+        return
+    }
     const admin = user.data.role === 'admin';
 
     const [showBooking, setShowBooking] = useState(false);
@@ -122,53 +127,53 @@ export default function Component() {
         setFormValues(value);
     };
     return (<div>
-    {admin ?
-        <div className="container">
+        {admin ?
+            <div className="container">
 
-            {/* Selections Menu */}
-            <div className="d-flex justify-content-between mb-4">
-                <div className="d-flex align-items-center">
-                    <button className="btn btn-light text-secondary mr-2" onClick={(e) => getData(e)} value={"hotels"}>Hotels</button>
-                    <button className="btn btn-light text-secondary mr-2" onClick={(e) => getData(e)} value="vehicles">Vehicles</button>
-                    <button className="btn btn-light text-secondary mr-2" onClick={(e) => getData(e)} value="attractions">Attractions</button>
-                    <button className="btn btn-light text-secondary" onClick={getBookingData} value="bookings">Bookings</button>
+                {/* Selections Menu */}
+                <div className="d-flex justify-content-between mb-4">
+                    <div className="d-flex align-items-center">
+                        <button className="btn btn-light text-secondary mr-2" onClick={(e) => getData(e)} value={"hotels"}>Hotels</button>
+                        <button className="btn btn-light text-secondary mr-2" onClick={(e) => getData(e)} value="vehicles">Vehicles</button>
+                        <button className="btn btn-light text-secondary mr-2" onClick={(e) => getData(e)} value="attractions">Attractions</button>
+                        <button className="btn btn-light text-secondary" onClick={getBookingData} value="bookings">Bookings</button>
+                    </div>
+
+                    {/* Add item */}
+                    <div className="d-flex align-items-center">
+                        <Select
+                            defaultValue="hotel"
+                            style={{ width: 120 }}
+                            onChange={handleChange}
+                            options={[
+                                { value: 'hotel', label: 'Hotel' },
+                                { value: 'vehicle', label: 'Vehicle' },
+                                { value: 'attraction', label: 'Attraction' },
+                            ]}
+                        />
+                        <Link to={`/admin/dashboard/add/${formValues}`}>
+                            <button className="btn btn-outline-primary">
+                                <PlusIcon className="mr-2" />
+                                <span>Add New</span>
+                            </button>
+                        </Link>
+                    </div>
                 </div>
 
-                {/* Add item */}
-                <div className="d-flex align-items-center">
-                    <Select
-                        defaultValue="hotel"
-                        style={{ width: 120 }}
-                        onChange={handleChange}
-                        options={[
-                            { value: 'hotel', label: 'Hotel' },
-                            { value: 'vehicle', label: 'Vehicle' },
-                            { value: 'attraction', label: 'Attraction' },
-                        ]}
-                    />
-                    <Link to={`/admin/dashboard/add/${formValues}`}>
-                        <button className="btn btn-outline-primary">
-                            <PlusIcon className="mr-2" />
-                            <span>Add New</span>
-                        </button>
-                    </Link>
-                </div>
+                {!showBooking ?
+
+                    <Database dataArr={dataArr} deleteData={deleteData} currentPage={currentPage} />
+
+                    :
+                    <AllBookings vehicleData={vehicleData} hotelData={hotelData} />
+                }
             </div>
-
-            {!showBooking ?
-               
-                   <Database dataArr={dataArr} deleteData={deleteData} currentPage={currentPage} />
-               
-                :
-                <AllBookings vehicleData={vehicleData} hotelData={hotelData} />
-            }
-        </div>
-               :
-        <div className="container">
-        <h1 className="text-center m-4 p-2"> My Bookings</h1>
-            <AllBookings vehicleData={vehicleData} hotelData={hotelData} cancelBooking={true}/>
-        </div>
-    }
+            :
+            <div className="container">
+                <h1 className="text-center m-4 p-2"> My Bookings</h1>
+                <AllBookings vehicleData={vehicleData} hotelData={hotelData} cancelBooking={true} />
+            </div>
+        }
     </div>
 
     );

@@ -178,7 +178,7 @@ function BookingScreen() {
                         <p>Rent per hour: ${vehicle?.rentperhr} </p>
                         <p>Total amount: ${total_amount}</p>
                     </div>
-                    <div style={{ float: 'right' }}><button className='btn btn-primary' onClick={bookVehicle}>Pay Now</button> </div>
+                    <div style={{ float: 'right' }}><button className='btn btn-primary' onClick={bookVehicle}>Book Now</button> </div>
                 </div>
 
             </div>

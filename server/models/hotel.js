@@ -5,6 +5,9 @@ const hotelSchema = new mongoose.Schema({
         type: String,
 
     },
+    url:{
+        type:String
+    },
     city: {
         type: String,
 

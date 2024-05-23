@@ -27,6 +27,7 @@ function HotelForm() {
 
         const DataToSend = {
             hotel_name: values.hotel_name,
+            url:values.url,
             city: values.city,
             state: values.state,
             country: values.country,
@@ -88,6 +89,9 @@ function HotelForm() {
                 style={{ maxWidth: 1080 }}
             >
                 <Form.Item name="hotel_name" label="Hotel Name" rules={[{ required: true }]}>
+                    <Input />
+                </Form.Item>
+                <Form.Item name="url" label="Booking URL" rules={[{ required: true }]}>
                     <Input />
                 </Form.Item>
                 <Form.Item name="city" label="City" rules={[{ required: true }]}>

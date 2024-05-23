@@ -39,7 +39,7 @@ app.get('/hotels', async (req, res) => {
 
 app.post('/hotel/add', async (req, res) => {
     try {
-        const { hotel_name, city, state, country, star_rating, photo1, photo2, photo3, photo4, overview, rating_average, rentperday, facility } = req.body;
+        const { hotel_name,url, city, state, country, star_rating, photo1, photo2, photo3, photo4, overview, rating_average, rentperday, facility } = req.body;
 
         if (!hotel_name || !city || !state || !country || !star_rating || !photo1 || !photo2 || !photo3 || !photo4 || !overview || !rating_average || !rentperday || !facility) {
             return res.status(400).json({
@@ -51,6 +51,7 @@ app.post('/hotel/add', async (req, res) => {
 
         const newHotel = new Hotel({
             hotel_name,
+            url,
             city,
             state,
             country,

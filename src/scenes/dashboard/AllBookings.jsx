@@ -8,12 +8,12 @@ function AllBookings({ vehicleData, hotelData, cancelBooking }) {
             console.log(itemId);
             const response = await fetch(`http://localhost:8000/cancleBooking/${user.data._id}/${itemId}/${hotel}/${vehicle}`);
             const res = await response.json();
-            
+
             console.log(res.success);
 
-            if(res.success){
+            if (res.success) {
                 alert(`${hotel ? 'Hotel' : 'Vehicle'} Booking is successfully cancelled`)
-            }else{
+            } else {
                 alert('Failed to cancel');
             }
         } catch (err) {
@@ -55,7 +55,7 @@ function AllBookings({ vehicleData, hotelData, cancelBooking }) {
                                             </div>
                                         </div>
                                         {
-                                            cancelBooking && <div className="card-img-overlay d-flex justify-content-end">
+                                            (cancelBooking) && <div className="card-img-overlay d-flex justify-content-end">
                                                 <button className="btn btn-danger btn-sm" style={{ height: '40px' }}
                                                     onClick={() => cancelBookingHandler(data._id, false, true)}>
                                                     Cancle
