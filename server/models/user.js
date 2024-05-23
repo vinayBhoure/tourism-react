@@ -18,14 +18,8 @@ const userSchema = new mongoose.Schema({
         default: 'customer'
     },
     bookings: {
-        hotel_booking:[{
-            type: mongoose.Schema.Types.ObjectId,
-            ref: 'hotels'
-        }],
-        vehicle_booking:[{
-            type: mongoose.Schema.Types.ObjectId,
-            ref: 'vehicles'
-        }]
+        hotel_booking:[],
+        vehicle_booking:[]
     },
     token:{
         type: String,

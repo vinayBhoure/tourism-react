@@ -48,7 +48,6 @@ const UserAccount = () => {
 
 const Header = () => {
 	const [showMenu, setShowMenu] = useState(false);
-	const { authUser } = useUserContext();
 
 
 	const toggleMenu = () => {
@@ -85,16 +84,16 @@ const Header = () => {
 							<li>
 								<Link to="/contact">CONTACT</Link>
 							</li>
-							{authUser?.data.role === 'admin' && (
-								<li>
-									<Link to="/admin/dashboard">Dashboard</Link>
-								</li>
-							)}
+
+							<li>
+								<Link to="/admin/dashboard">Dashboard</Link>
+							</li>
+
 							<UserAccount />
 						</ul>
 					</nav>
 					<div className="hamburger" onClick={toggleMenu}>
-					{showMenu ? <IoMdExit size={'2rem'}/> :<MdMenuOpen size={'2rem'}/> }
+						{showMenu ? <IoMdExit size={'2rem'} /> : <MdMenuOpen size={'2rem'} />}
 					</div>
 				</div>
 			</div>

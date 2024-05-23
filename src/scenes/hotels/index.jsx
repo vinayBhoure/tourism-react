@@ -42,7 +42,7 @@ const HotelBooking = () => {
   const [toDate, setToDate] = useState(null)
 
   function filterByDate(dates, dateStrings) {
-    console.log('From: ', dateStrings[0], ', to: ', dateStrings[1]);
+    console.log('From: ', dates[0],', to: ', dates[1]);
     setFromDate(dateStrings[0])
     setToDate(dateStrings[1])
   }

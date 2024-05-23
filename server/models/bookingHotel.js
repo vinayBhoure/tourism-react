@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 
 const bookingHotelSchema = new mongoose.Schema({
-    hotel:{
+    hotel: {
         type: Object,
         required: true
     },
@@ -9,9 +9,18 @@ const bookingHotelSchema = new mongoose.Schema({
         type: String,
         required: true
     },
+    user_name: {
+        type: String
+    },
     total_days: {
         type: Number,
         // required: true
+    },
+    fromD: {
+        type: String
+    },
+    toD: {
+        type: String
     },
     rentperday: {
         type: Number,
@@ -20,6 +29,9 @@ const bookingHotelSchema = new mongoose.Schema({
     total_amount: {
         type: Number,
         // required: true
+    },
+    bookingID:{
+        type:String
     },
     transaction_id: {
         type: String,
@@ -31,10 +43,10 @@ const bookingHotelSchema = new mongoose.Schema({
         enum: ['booked', 'cancelled'],
         default: 'booked'
     },
- timestamp:{
-    type: Date,
-    default: Date.now
-}
+    timestamp: {
+        type: Date,
+        default: Date.now
+    }
 });
 
 module.exports = mongoose.model('bookingHotels', bookingHotelSchema);

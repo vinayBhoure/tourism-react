@@ -78,7 +78,10 @@ function BookingHotel() {
     const bookingData = {
       hotel: hotelInfo,
       user_id: user.data._id,
+      user_name: user.data.name,
       total_days: totalDays,
+      fromD: from,
+      toD:to,
       rentperday: hotelInfo.rentperday,
       total_amount: total_amount,
     }

@@ -13,6 +13,14 @@ const bookingVehicleSchema = new mongoose.Schema({
         type: String,
         required: true
     },
+    user_name: {
+        type: String,
+        required: true
+    },
+    booking_date:{
+        type: String,
+        required: true
+    },
     total_hours: {
         type: Number,
         required: true
@@ -24,6 +32,9 @@ const bookingVehicleSchema = new mongoose.Schema({
     total_amount: {
         type: Number,
         required: true
+    },
+    bookingID:{
+        type: String,
     },
     transaction_id: {
         type: String,

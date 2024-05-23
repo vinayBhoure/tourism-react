@@ -51,8 +51,8 @@ function App() {
 						<Route path="/vehicles" element={<VehicleBooking />} />
 						<Route path="/vehicle/:transportId" element={<BookingScreen />} />
 						<Route path="/attractions/:id" element={<AttractionDetail />} />
+						<Route path="/admin/dashboard" element={<Dashboard />} />
 						<Route element={<ProtectedRoutes />}>
-							<Route path="/admin/dashboard" element={<Dashboard />} />
 							<Route path="/admin/dashboard/add/hotel" element={<HotelForm />} />
 							<Route path="/admin/dashboard/add/vehicle" element={<VehicleForm/>} />
 							<Route path="/admin/dashboard/add/attraction" element={<AttractionForm />} />

@@ -3,12 +3,15 @@ import './vehicle.css'
 import {Link} from 'react-router-dom'
 import { useParams } from 'react-router-dom'
 import { useState } from 'react'
+import moment from 'moment'
+import { DatePicker, Space } from 'antd';
 // import emailjs from 'emailjs'
 
 function BookingScreen() {
-
+    
     const vehicleId = useParams().transportId;
     const [vehicle, setVehicle] = useState({});
+    const [bookingDate, setBookingDate] = useState('');
 
     
     const [selectedhours, setSelectedhours] = useState(1);
@@ -67,11 +70,11 @@ function BookingScreen() {
             vehicle: vehicle,
             vehicle_id: vehicleId,
             user_id: user.data._id,
+            user_name: user.data.name,
+            booking_date: bookingDate,
             total_hours: selectedhours,
             rentperhr: vehicle?.rentperhr,
-            total_amount: total_amount,
-            transaction_id: '',
-            status: 'booked'
+            total_amount: total_amount
         }
 
         const confirm = window.confirm('Do you want to book this vehicle?');
@@ -101,6 +104,27 @@ function BookingScreen() {
             console.log(err)
         }
     }
+
+    function isDateValidAndCurrent(dateString) {
+        const format = 'YYYY-MM-DD';
+        const chosenDate = moment(dateString, format, true);
+    
+        if (!chosenDate.isValid()) {
+          return false;
+        }
+    
+        const currentDate = moment().format(format);
+        return chosenDate.isSameOrAfter(currentDate, 'day');
+      }
+
+    const onChange = (date, dateString) => {
+        const temp = moment(dateString).format('YYYY-MM-DD')
+        if (!isDateValidAndCurrent(temp)) {
+            alert('Please select valid date');
+            return;
+        }
+        setBookingDate(temp);
+    }
     
     useEffect(() => {
         getVehicle()
@@ -123,6 +147,7 @@ function BookingScreen() {
 
                     <div style={{ textAlign: 'left' }}>
                         <h1>Amount</h1>
+                        <p>Booking for: <DatePicker onChange={onChange} /></p>
                         <p>Total hours: 
                         <select name='selectedhours' onChange={selectHandler}>
                             <option value="1">1</option>

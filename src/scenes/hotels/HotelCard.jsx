@@ -39,7 +39,7 @@ function HotelCard({ hotel, fromDate, toDate }) {
         alert('Please select valid date range')
         return;
       }
-      window.open(`/hotel/${hotel._id}/${fromDate}/${toDate}`, '_blank');
+      window.open(`/hotel/${hotel._id}/${fromDate}/${toDate}`);
     }
   }
 
