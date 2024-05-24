@@ -37,6 +37,7 @@ function countDaysBetweenDates(date1, date2) {
     try {
       const result = await fetch(`http://localhost:8000/hotel/${hotelid}`)
       const res = await result.json()
+      
       if(!res.success) {
         alert('Hotel not found');
         window.location.href = '/hotels';

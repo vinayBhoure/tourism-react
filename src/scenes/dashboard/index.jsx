@@ -58,9 +58,10 @@ export default function Component() {
                 alert("Error in fetching vehicle booking data");
                 return;
             }
-            setVehicleData(res.data.vehicle_booking);
-            setHotelData(res.data.hotel_booking);
-            console.log("user bookings", res);
+            console.log(res.data[0], res.data[1]);
+            setVehicleData(res.data[1]);
+            setHotelData(res.data[0]);
+            
         } catch (error) {
             console.log(error);
         }
@@ -171,7 +172,7 @@ export default function Component() {
             :
             <div className="container">
                 <h1 className="text-center m-4 p-2"> My Bookings</h1>
-                <AllBookings vehicleData={vehicleData} hotelData={hotelData} cancelBooking={true} />
+                <AllBookings vehicleData={vehicleData} hotelData={hotelData} cancelBooking={true} getMyBookings={getMyBookings}/>
             </div>
         }
     </div>

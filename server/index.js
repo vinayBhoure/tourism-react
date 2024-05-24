@@ -39,7 +39,7 @@ app.get('/hotels', async (req, res) => {
 
 app.post('/hotel/add', async (req, res) => {
     try {
-        const { hotel_name,url, city, state, country, star_rating, photo1, photo2, photo3, photo4, overview, rating_average, rentperday, facility } = req.body;
+        const { hotel_name, url, city, state, country, star_rating, photo1, photo2, photo3, photo4, overview, rating_average, rentperday, facility } = req.body;
 
         if (!hotel_name || !city || !state || !country || !star_rating || !photo1 || !photo2 || !photo3 || !photo4 || !overview || !rating_average || !rentperday || !facility) {
             return res.status(400).json({
@@ -540,7 +540,7 @@ app.post('/booking/vehicle', async (req, res) => {
         await booking.save();
 
         const user = await User.findById(user_id);
-        user.bookings.vehicle_booking.push(booking);
+        user.bookings.vehicle_booking.push(booking.bookingID);
         await user.save();
 
         return res.status(200).json({
@@ -594,7 +594,7 @@ app.post('/booking/hotel', async (req, res) => {
         await booking.save();
 
         const user = await User.findById(user_id);
-        user.bookings.hotel_booking.push(booking);
+        user.bookings.hotel_booking.push(booking.bookingID);
         await user.save();
 
         return res.status(200).json({
@@ -651,12 +651,14 @@ app.get('/getBookings/hotels', async (req, res) => {
 app.get('/getBookings/:id', async (req, res) => {
     try {
         const id = req.params.id;
-        const result = await User.findById(id);
+
+        const hotelbooking = await BookingH.find({ user_id: id });
+        const vehiclebooking = await BookingV.find({ user_id: id });
 
         return res.status(200).json({
             success: true,
-            count: result.length,
-            data: result.bookings
+            count: [hotelbooking.length, vehiclebooking.length],
+            data: [hotelbooking, vehiclebooking]
         })
     } catch (err) {
         return res.status(400).json({
@@ -673,48 +675,15 @@ app.get('/cancleBooking/:userID/:id/:hotel/:vehicle', async (req, res) => {
 
     try {
 
-        if (hotel) {
+        if (hotel === 'true') {
             const hotelBooking = await BookingH.findById(id)
             hotelBooking.status = "cancelled"
             await hotelBooking.save()
-
-            const user = await User.findOne({ _id: userID });
-            if (!user) {
-                console.error('User not found');
-                return;
-            }
-
-            const res = user.bookings.hotel_booking.find(booking => booking.bookingID === (id));
-            if (!res) {
-                console.error('Hotel booking not found');
-                return;
-            }
-            res.status = 'cancelled';
-            console.log("respisne",res.status)
-            
-            const updatedUser = await user.save();
-        }
-
-        if (vehicle) {
+        } 
+        if(vehicle === 'true') {
             const vehicleBooking = await BookingV.findById(id)
             vehicleBooking.status = 'cancelled'
             await vehicleBooking.save()
-
-            const user = await User.findOne({ _id: userID });
-            if (!user) {
-                console.error('User not found');
-                return;
-            }
-            console.log(user.bookings.vehicle_booking[0].bookingID)
-            const res = user.bookings.vehicle_booking.find(booking => booking.bookingID === (id));
-            if (!res) {
-                console.error('Hotel booking not found');
-                return;
-            }
-
-            res.status = 'cancelled';
-
-            const updatedUser = await user.save();
         }
 
         res.status(200).json({

@@ -24,6 +24,7 @@ import AttractionDetail from "./scenes/attractions/AttractionDetail";
 import HotelForm from "./scenes/dashboard/HotelForm";
 import AttractionForm from "./scenes/dashboard/AttractionForm";
 import VehicleForm from "./scenes/dashboard/VehicleForm";
+import Mice1 from "./scenes/mice1"
 
 
 
@@ -41,6 +42,7 @@ function App() {
 						<Route path="/attractions" element={<Attractions />} />
 						<Route path="/contact" element={<Contact />} />
 						<Route path="/mice" element={<Mice />} />
+						<Route path="/mice1" element={<Mice1 />} />
 						<Route path="/packages" element={<Packages />} />
 						<Route path="/vehiclefleet" element={<VehicleFleet />} />
 						<Route path="/packages" element={<Packages />} />

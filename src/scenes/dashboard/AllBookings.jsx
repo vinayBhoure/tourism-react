@@ -1,21 +1,22 @@
 import React from 'react'
 
-function AllBookings({ vehicleData, hotelData, cancelBooking }) {
+function AllBookings({ vehicleData, hotelData, cancelBooking, getMyBookings }) {
     const user = JSON.parse(localStorage.getItem('current-user'))
 
     async function cancelBookingHandler(itemId, hotel, vehicle) {
         try {
-            console.log(itemId);
+            console.log("booking_id", itemId);
             const response = await fetch(`http://localhost:8000/cancleBooking/${user.data._id}/${itemId}/${hotel}/${vehicle}`);
             const res = await response.json();
+            getMyBookings();
 
-            console.log(res.success);
+            // console.log(res.success);
 
-            if (res.success) {
-                alert(`${hotel ? 'Hotel' : 'Vehicle'} Booking is successfully cancelled`)
-            } else {
-                alert('Failed to cancel');
-            }
+            // if (res.success) {
+            //     alert(`${hotel ? 'Hotel' : 'Vehicle' } Booking is successfully cancelled`)
+            // } else {
+            //     alert('Failed to cancel');
+            // }
         } catch (err) {
             console.log(err);
         }
@@ -32,7 +33,7 @@ function AllBookings({ vehicleData, hotelData, cancelBooking }) {
 
                                 <div className="card h-100 col-4">
 
-                                    <img className="card-img-top" src={data.vehicle.img_url} alt={`${data.vehicle.img_url} Image`} />
+                                    <img className="card-img-top" src={data?.vehicle.img_url} alt={`${data?.vehicle.img_url} Image`} />
 
                                 </div>
                                 <div className="col-8">
@@ -55,10 +56,10 @@ function AllBookings({ vehicleData, hotelData, cancelBooking }) {
                                             </div>
                                         </div>
                                         {
-                                            (cancelBooking) && <div className="card-img-overlay d-flex justify-content-end">
+                                            data.status === 'booked' && cancelBooking && <div className="card-img-overlay d-flex justify-content-end">
                                                 <button className="btn btn-danger btn-sm" style={{ height: '40px' }}
                                                     onClick={() => cancelBookingHandler(data._id, false, true)}>
-                                                    Cancle
+                                                    Cancel
                                                     <span className="sr-only" >Delete</span>
                                                 </button>
                                             </div>
@@ -101,10 +102,10 @@ function AllBookings({ vehicleData, hotelData, cancelBooking }) {
                                             </div>
                                         </div>
                                         {
-                                            cancelBooking && <div className="card-img-overlay d-flex justify-content-end">
+                                           data.status === 'booked' && cancelBooking && <div className="card-img-overlay d-flex justify-content-end">
                                                 <button className="btn btn-danger btn-sm" style={{ height: '40px' }}
                                                     onClick={() => cancelBookingHandler(data._id, true, false)}>
-                                                    Cancle
+                                                    Cancel
                                                     <span className="sr-only" >Delete</span>
                                                 </button>
                                             </div>

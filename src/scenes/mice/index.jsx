@@ -77,12 +77,12 @@ const Mice = () => {
         {arr.map((item, idx) => {
           return (
             <div className={`wrapper item-${idx + 1}`}>
-              <div className='big-box'>
-                <div className='small-box'>
-                  <div className='box-1'><img src={item.image1} alt={item.image1} /></div>
-                  <div className='box-2'><img src={item.image2} alt={item.image1} /></div>
-                  <div className='box-3'><img src={item.image1} alt={item.image1} /></div>
-                  <div className='box-4'><img src={item.image2} alt={item.image1} /></div>
+              <div className={`big-box img-${idx+1}`}>
+                <div className={`small-box img-${idx+1}`}>
+                  <div className={`box-1 img-${idx+1}`}><img src={item.image1} alt={item.image1} /></div>
+                  <div className={`box-2 img-${idx+1}`}><img src={item.image2} alt={item.image1} /></div>
+                  <div className={`box-3 img-${idx+1}`}><img src={item.image1} alt={item.image1} /></div>
+                  <div className={`box-4 img-${idx+1}`}><img src={item.image2} alt={item.image1} /></div>
                 </div>
               </div>
             </div>)
